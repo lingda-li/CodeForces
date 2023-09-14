@@ -20,7 +20,7 @@ int main(){
                     if((p + q + r) % 10 != 3){continue;}
 
                     if(p == q && q == r && cnt[r] > 2){res = true;}
-                    else if(p == q && cntaq] > 1 && cnt[r] > 0){res = true;}
+                    else if(p == q && cnt[q] > 1 && cnt[r] > 0){res = true;}
                     else if(q == r && cnt[r] > 1 && cnt[p] > 0){res = true;}
                     else if(p < q && q < r && cnt[p] > 0 && cnt[q] > 0 && cnt[r] > 0){res = true;}
                 }
