@@ -1,12 +1,12 @@
 #include <iostream>
 #include <vector>
 
-void dfs(long row, long col, const std::vector<std::string> &mz, std::vector<std::vector<std::pair<long, long> > > &visited, std::vector<std::pair<long, long> > &bs){
+void dfs(long row, long col, const std::vector<std::string> &mz, std::vector<std::vector<bool> > &visited, std::vector<std::pair<long, long> > &bs){
 
     long n = mz.size();
     long m = mz[0].size();
 
-    if(visited[(row + n) % n][(col + m) % m] == std::make_pair(row, col)){return;}
+    //if(visited[(row + n) % n][(col + m) % m] == std::make_pair(row, col)){return;}
 
     if(row < 0 || row >= n){row += 2 * n; row %= n;}
     if(col < 0 || col >= m){col += 2 * m; col %= m;}
