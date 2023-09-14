@@ -22,7 +22,7 @@ int main(){
         }
 
         puts(res ? "YES" : "NO");
-    oo}
+    }
 
     return 0;
 }

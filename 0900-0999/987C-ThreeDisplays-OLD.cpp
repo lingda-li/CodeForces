@@ -1,6 +1,7 @@
 //This solution only works when we can pick any three displays with different font size
 #include <cstdio>
 #include <iostream>
+#include <algorithm>
 #include <vector>
 #include <map>
 
@@ -19,7 +20,7 @@ int main(){
 
     std::vector<long> v;
     for(std::map<long, long>::iterator it = m.begin(); it != m.end(); it++){v.push_back(it->second);}
-    sort(v.begin(), v.end());
+    std::sort(v.begin(), v.end());
 
     if(v.size() < 3){puts("-1");}
     else{printf("%ld\n", v[0] + v[1] + v[2]);}

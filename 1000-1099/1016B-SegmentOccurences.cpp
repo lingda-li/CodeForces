@@ -25,7 +25,7 @@ int main(){
         //Two problems: First - where to move the left boundary
         //Second: what if there is a repetitive pattern, eg s = aaaaaaaaa, t = aaa
 
-        cnt = v[r] - ((l > 0) ? v[l - 1] : 0);}
+        cnt = v[r] - ((l > 0) ? v[l - 1] : 0);
         std::cout << cnt << std::endl;
     }
 
