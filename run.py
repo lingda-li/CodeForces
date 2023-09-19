@@ -1,5 +1,12 @@
+import argparse
 import os
 import subprocess
+
+
+parser = argparse.ArgumentParser(description='Run benchmarks')
+parser.add_argument('--mem', '-m', action='store_true', default=False)
+parser.add_argument('--repeat', '-r', type=int, default=1)
+args = parser.parse_args()
 
 # traverse whole directory
 nerrs = 0
@@ -14,15 +21,28 @@ for root, dirs, files in os.walk(r'.'):
       if not os.path.exists(bin_file):
         print("Cannot find", bin_file)
         continue
-      in_file = os.path.join(root, file.replace('.cpp', '.in'))
+      if args.mem:
+        in_file = os.path.join(root, file.replace('.cpp', '.min'))
+      else:
+        in_file = os.path.join(root, file.replace('.cpp', '.in'))
       if not os.path.exists(in_file):
         print("Cannot find", in_file)
         continue
-      command = 'perf stat %s < %s' % (bin_file, in_file)
-      #command = '%s < %s' % (bin_file, in_file)
+      command = 'perf stat -e cycles,cycles:u,instructions:u,cache-misses:u,cache-references:u '
+      if args.repeat > 1:
+        command += '-r %d ' % args.repeat
+        perl_command = "perl -0777pe '$_=$_ x %d' %s > tmp" % (args.repeat, in_file)
+        try:
+          subprocess.check_call(perl_command, stderr=subprocess.STDOUT, shell=True)
+        except subprocess.CalledProcessError:
+          print("Error when repeating", os.path.join(root, in_file))
+          nerrs += 1
+          continue
+        in_file = 'tmp'
+      command += '%s < %s' % (bin_file, in_file)
       print(command)
-      #proc = subprocess.Popen(command, shell=True)
       try:
+        #proc = subprocess.Popen(command, shell=True)
         subprocess.check_call(command, stderr=subprocess.STDOUT, shell=True)
       except subprocess.CalledProcessError:
         print("Error when running", os.path.join(root, file))
