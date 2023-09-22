@@ -28,7 +28,7 @@ for root, dirs, files in os.walk(r'.'):
       if not os.path.exists(in_file):
         print("Cannot find", in_file)
         continue
-      command = 'perf stat -e cycles,cycles:u,instructions:u,cache-misses:u,cache-references:u '
+      command = 'perf stat -e cycles,cycles:u,instructions:u,cache-misses:u,cache-references:u,stalled-cycles-backend:u,stalled-cycles-frontend:u,dTLB-load-misses:u '
       if args.repeat > 1:
         command += '-r %d ' % args.repeat
         perl_command = "perl -0777pe '$_=$_ x %d' %s > tmp" % (args.repeat, in_file)
